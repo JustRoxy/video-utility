@@ -23,7 +23,7 @@ class Media:
         elif self.platform == "Windows":
             command = 'ffprobe.exe -i  "' + self.filePath + '" 2>&1 |findstr "Duration"'
         else:
-            raise OSError
+            raise OSError("Unknown platform: "+self.platform)
         a = str(subprocess.check_output(command, shell=True))
         a = a.split(",")[0].split("Duration:")[1].strip()
         try:
@@ -45,7 +45,7 @@ def get_async(item):
 if __name__ == "__main__":
     args = configargparse.ArgParser()
     args.add_argument('-l', '--pool', default=5, help='multiprocessing pool size')
-    args.add_argument('-p', '--path', required=True, help='Destination folder path')
+    args.add_argument('-p', '--path', required=False, default="raw", type=str, help='Destination folder path')
     options = args.parse_args()
     directory = args.parse_args().path
     files = os.listdir(directory)
