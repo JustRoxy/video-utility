@@ -18,7 +18,7 @@ class Media:
         self.seconds = 0
 
     def calculate_length(self):
-        if self.platform == "Linux":
+        if self.platform in ["Linux", "Darwin"]:
             command = 'ffprobe -i  "' + self.filePath + '" 2>&1 |grep "Duration"'
         elif self.platform == "Windows":
             command = 'ffprobe.exe -i  "' + self.filePath + '" 2>&1 |findstr "Duration"'
